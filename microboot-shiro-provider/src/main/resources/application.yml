@@ -1,0 +1,45 @@
+spring:    #交给spring处理
+  messages:   #处理内容是资源文件
+    basename: i18n/Message,i18n/Pages
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/shirodb
+    username: root
+    password: 123456
+    filters: stat,wall,log4
+    dbcp2:
+      min-idle: 5
+      initial-size: 10
+      max-total: 100
+      max-wait-millis: 1000 
+  redis:
+    host: 192.168.253.133
+    port: 6379
+    password: 123456
+    database: 0
+    timeout: 100
+    pool:
+      max-active: 10
+      max-idle: 8
+      min-idle: 2
+      max-wait: 50
+  redis-two:
+    host: 192.168.253.133
+    port: 6380
+    password: 123456
+    database: 0
+    timeout: 100
+    pool:
+      max-active: 10
+      max-idle: 8
+      min-idle: 2
+      max-wait: 50
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml
+  type-aliases-package: com.huang.microboot.vo
+  mapper-locations:
+  - classpath:mybatis/mapping/**/*.xml
+
+server:
+  port: 8080

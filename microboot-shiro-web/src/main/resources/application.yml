@@ -1,0 +1,16 @@
+spring:    #交给spring处理
+  messages:   #处理内容是资源文件
+    basename: i18n/Message,i18n/Pages
+  redis:
+    host: 192.168.253.133
+    port: 6379
+    password: 123456
+    database: 0
+    timeout: 100
+    pool:
+      max-active: 10
+      max-idle: 8
+      min-idle: 2
+      max-wait: 50
+server:
+  port: 80

@@ -1,0 +1,103 @@
+<!DOCTYPE html >
+<html  xmlns:th="http://www.thymeleaf.org"> 
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>spring thymeleaf</title>
+</head>
+<body>
+	<!-- <form action="/add" method="post">
+		<fieldset>
+			<legend>增加雇员</legend>
+			编号:<input type="text" name="eid" value="1001"/><br/><br/>
+			姓名:<input type="text" name="name" value="张三"/><br/><br/>
+			年龄:<input type="text" name="age" value="26"/><br/><br/>
+			邮箱:<input type="text" name="email" value="1111@qq.com"/><br/><br/>
+			薪资:<input type="text" name="sal" value="10011"/><br/><br/>
+			日期:<input type="text" name="hiredate" value="2017-09-09"/><br/><br/>
+			<input type="submit" value="提交"/>
+			<input type="reset" value="重置"/>
+		</fieldset>
+	</form> -->
+	
+	<!-- <p th:text="#{emp.add.action}+'?mid='+(1+9)"/>
+	<p th:text="#{add.success(雇员)}"/>
+	<a th:href="@{/add}" th:text="增加雇员"/> -->
+	
+	<!-- <p th:text="'雇员编号='+${emp.eid}"/>
+	<p th:text="'雇员姓名='+${emp.name}"/>
+	<p th:text="'雇员年龄='+${emp.age}"/>
+	<p th:text="'雇员薪资='+${emp.sal}"/>
+	<p th:text="'雇员日期='+${#dates.format(emp.hiredate,'yyyy年MM月dd日')}"/>
+	<p th:text="'雇员邮箱='+${emp.email}"/>
+	
+	
+	<p th:if="${emp.age ge 18}">
+		大于18岁
+	</p>
+		<p th:if="${emp.age lt 18}">
+		小于18岁
+	</p>
+		<p th:if="${emp.age eq 18}">
+		刚好是18岁
+	</p>
+	<p th:if="${emp.name eq '张鼠标'}">
+		欢迎<span th:text="${emp.name}"/>
+	</p>
+	
+	<p th:switch="${emp.eid}"> 
+		<p th:case="'1001'">这是超级管理员</p>
+		<p th:case="'1002'">这是普通管理员</p>
+		<p th:case="'1003'">这是雇员</p>
+		<p th:case="*">平民</p>
+	</p> -->
+	
+	<!-- <table border="1px" >
+		<tr>
+			<td>序号</td><td>部门</td><td>编号</td><td>姓名</td><td>年龄</td><td>薪资</td><td>邮箱</td><td>入职时间</td><td>偶数</td><td>奇数</td>
+		</tr>
+		<tr th:each="emp,empStat:${allEmps}">
+			<td th:text="${empStat.index}"/>
+			<td th:text="${emp.key}"/>
+			<td th:text="${emp.value.eid}"/>
+			<td th:text="${emp.value.name}"/>
+			<td th:text="${emp.value.age}"/>
+			<td th:text="${emp.value.sal}"/>
+			<td th:text="${emp.value.email}"/>
+			<td th:text="${#dates.format(emp.value.hiredate,'yyyy-MM-dd HH:mm:ss')}"/>
+			<td th:text="${empStat.even}"/>
+			<td th:text="${empStat.odd}"/>
+		</tr>
+	</table> -->
+	
+	<!-- <div th:replace="@{/pages/footer}::companyInfo" th:with="name=小明"></div>
+	<div th:include="@{/pages/footer}::companyInfo" th:with="name=小王"></div> -->
+	
+	<p th:text="${allEmps['研发部门-']}"/>
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

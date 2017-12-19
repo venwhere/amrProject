@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.sun.amr.dao.IDetailsDAO">
+	<resultMap type="Details" id="DetailsResultMap">
+		<id property="did" column="did"/>
+		<result property="title" column="title"/>
+		<result property="price" column="price"/>
+		<result property="amount" column="amount"/>
+		<result property="photo" column="photo"/>
+		<result property="rflag" column="rflag"/>
+		<!-- 所属的父类别 -->
+		<association property="type" column="tid" resultMap="com.sun.amr.dao.ITypeDAO.TypeResultMap"/>
+		<!-- 所属子类别的信息 -->
+		<association property="subtype" column="stid" resultMap="com.sun.amr.dao.ISubtypeDAO.SubtypeResultMap"/>
+		<!-- 操作人的信息 -->
+		<association property="emp" column="eid" resultMap="com.sun.amr.dao.IEmpDAO.EmpResultMap"/>
+		<!-- 查找办公用品属性 -->
+		<association property="res" column="rid" resultMap="com.sun.amr.dao.IResDAO.ResResultMap"/>
+	</resultMap>
+	<!-- 增加购物清单 -->
+	<insert id="doCreate" parameterType="Details">
+		INSERT INTO details(tid,stid,eid,title,price,amount,photo,rflag,rid)
+		VALUES (#{type.tid},#{subtype.stid},#{emp.eid},#{title},#{price},#{amount},#{photo},#{rflag},#{res.rid})
+	</insert>
+	<!-- 查询待购清单 -->
+	<select id="findAllDetails" parameterType="int" resultMap="DetailsResultMap">
+		SELECT did,tid,stid,eid,pid,rid,title,price,amount,photo,rflag FROM 
+		details WHERE pid IS NULL AND eid=#{eid};
+	</select>
+	<!-- 在删除之前根据清单的编号尽心数据查询 -->
+	<select id="findAllByPhoto" parameterType="java.lang.Integer" resultMap="DetailsResultMap">
+		SELECT did,photo,eid FROM details
+		<where>
+			did IN
+			<foreach collection="list" open="(" close=")" separator="," item="ele">
+				#{ele}
+			</foreach>
+			AND rid IS NULL     <!-- 只能查询rid为null，表示还没有购买呢 -->
+		</where>
+	</select>
+	<!-- 实现清单的批量删除 -->
+	<delete id="doRemoveBatch" parameterType="Integer">  
+		DELETE FROM details WHERE did IN
+		<foreach collection="list" open="(" close=")" separator="," item="ele">
+			#{ele}
+		</foreach>
+	</delete>
+	<update id="doUpdateAmount" parameterType="Details">
+		UPDATE details SET amount=#{amount} WHERE did=#{did} AND eid=#{emp.eid};
+	</update>
+	<!-- 编辑前查询操作 -->
+	<select id="findByIdForPrebuy" resultMap="DetailsResultMap">
+		SELECT did,tid,stid,eid,pid,rid,title,price,amount,photo,rflag 
+		FROM details WHERE did=#{1} AND eid=#{0} AND pid IS NULL AND rid IS NULL;
+	</select>
+	<!-- 实现清单的编辑 -->
+	<update id="doUpdatePrebuy" parameterType="Details">
+		UPDATE details SET tid=#{type.tid},stid=#{subtype.stid},title=#{title},amount=#{amount},
+		price=#{price},photo=#{photo} WHERE did=#{did} AND eid=#{emp.eid} AND pid IS NULL AND rid 
+		IS NULL;
+	</update>
+	<!-- 更新pid的值 -->
+	<update id="doUpdateByPurchase">
+		UPDATE details SET pid=#{0} WHERE eid=#{1} AND pid IS NULL;
+	</update>
+	<!-- 根据申请单编号查询所有详情 -->
+	<select id="findAllByPurchase" parameterType="Integer" resultMap="DetailsResultMap">
+		SELECT did,tid,stid,eid,pid,rid,title,price,amount,photo,rflag FROM 
+		details WHERE pid=#{pid};
+	</select>
+	<!-- 判断追加的清单是否已经存在 -->
+	<select id="findByDetailsExists" resultMap="DetailsResultMap">
+		SELECT did FROM details WHERE pid IS NULL AND eid=#{0} AND rid=#{1};
+	</select>
+	<!--修改追加的待购清单的数量 -->
+	<update id="doUpdateAppendAmount" parameterType="int">
+		UPDATE details SET amount=amount+1 WHERE did=#{did};
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.sun.amr.dao.ILevelDAO">
+	<resultMap type="Level" id="LevelResultMap">
+		<id property="lid" column="lid"/>
+		<result property="title" column="title"/>
+		<result property="losal" column="losal"/>
+		<result property="hisal" column="hisal"/>
+	</resultMap>
+	<!-- 查询所有等级 -->
+	<select id="findAll" resultMap="LevelResultMap">
+		SELECT lid,title,losal,hisal FROM level;
+	</select>
+	<!-- 根据编号查询 -->
+	<select id="findById" resultMap="LevelResultMap" parameterType="int">
+		SELECT lid,title,losal,hisal FROM level WHERE lid=#{plid};
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+

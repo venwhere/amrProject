@@ -1,0 +1,12 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.huang.microboot.config.DruidConfig",
+      "name": "spring.datasource",
+      "sourceMethod": "public javax.sql.DataSource getDataSource() ",
+      "type": "javax.sql.DataSource"
+    }
+  ],
+  "properties": []
+}

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.sun.amr.dao.IEmpDAO">
+	<resultMap type="Emp" id="EmpResultMap">
+		<id property="eid" column="eid"/>
+		<result property="name" column="name"/>
+		<result property="password" column="password"/>
+		<result property="phone" column="phone"/>
+		<result property="salary" column="salary"/>
+		<result property="note" column="note"/>
+		<result property="aflag" column="aflag"/>
+		<result property="sex" column="sex"/>
+		<result property="photo" column="photo"/>
+		<!-- 雇员有自己所在的部门，在此是用来级联查询 -->
+		<association property="dept" column="did" resultMap="com.sun.amr.dao.IDeptDAO.DeptResultMap"/>
+		<!-- 每个雇员都有自己的级别，使用的是级联查询 -->
+		<association property="level" column="lid" resultMap="com.sun.amr.dao.ILevelDAO.LevelResultMap"/>
+	</resultMap>
+	<!-- 实现登录操作，根据编号和密码查询，这个密码是加密后的密码 -->
+	<select id="findLogin" parameterType="Emp" resultMap="EmpResultMap">
+		SELECT eid,name,password,aflag,photo,did,lid FROM emp WHERE eid=#{eid} AND password =#{password}
+	</select>
+	<!-- 根据编号查询雇员信息 -->
+	<select id="findById" parameterType="Integer" resultMap="EmpResultMap">
+		SELECT eid,did,lid,heid,name,password,phone,salary,note,aflag,sex,photo FROM emp WHERE eid=#{pid};
+	</select>
+	<!-- 增加管理员的操作 -->
+	<insert id="doCreate" parameterType="Emp">
+		INSERT INTO emp(eid,did,lid,heid,name,password,phone,salary,note,aflag,sex,photo)
+		VALUES(#{eid},#{dept.did},#{level.lid},#{heid},#{name},#{password},#{phone},#{salary},#{note},#{aflag},#{sex},#{photo});
+	</insert>
+	<!-- 模糊分页查询管理员信息 -->
+	<select id="findAllAdmin" parameterType="java.util.Map" resultMap="EmpResultMap">
+		SELECT eid,did,lid,heid,name,password,phone,salary,note,aflag,sex,photo FROM emp WHERE aflag IN(1,2)
+		<if test="keyWord!=null">
+			AND ${column} LIKE #{keyWord}
+		</if>
+		LIMIT #{start},#{lineSize};
+	</select>
+	<!-- 统计查询到的数据量，主要用来做分页操作 -->
+	<select id="getAllAdminCount" parameterType="java.util.Map" resultType="Integer">
+		SELECT COUNT(*) FROM emp WHERE aflag IN(1,2)
+		<if test="keyWord!=null">
+			AND ${column} LIKE #{keyWord}
+		</if>
+	</select>
+	<!-- 人事部页面模糊分页查询员工信息 -->
+	<select id="findAllEmp" parameterType="java.util.Map" resultMap="EmpResultMap">
+		SELECT eid,did,lid,heid,name,password,phone,salary,note,aflag,sex,photo FROM emp WHERE aflag=0
+		<if test="keyWord!=null">
+			AND ${column} LIKE #{keyWord}
+		</if>
+		LIMIT #{start},#{lineSize};
+	</select>
+	<!-- 人事部门页面查询员工的总数量 -->
+	<select id="getAllEmpCount" parameterType="java.util.Map" resultType="Integer">
+		SELECT COUNT(*) FROM emp WHERE aflag=0
+		<if test="keyWord!=null">
+			AND ${column} LIKE #{keyWord}
+		</if>
+	</select>
+	<update id="doUpdate" parameterType="Emp">
+		UPDATE emp
+		<set>
+			did=#{dept.did},lid=#{level.lid},name=#{name},phone=#{phone},
+			<if test="password!=null">
+				password=#{password},
+			</if>
+			salary=#{salary},note=#{note},aflag=#{aflag},sex=#{sex},photo=#{photo}
+		</set>
+		WHERE eid=#{eid}
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

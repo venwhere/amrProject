@@ -1,0 +1,45 @@
+<!DOCTYPE html >
+<html xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"> 
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>spring thymeleaf</title>
+</head>
+<body>
+
+	<h1>欢迎界面</h1>
+	<p><a shiro:hasRole="dept">部门管理</a></p>
+	<p><a shiro:hasRole="emp">雇员管理</a></p>
+	<p><a shiro:hasRole="member">管理员</a></p>
+	<p><a shiro:hasPermission="dept:add">增加部门</a></p>
+	<p><a shiro:hasPermission="dept:edit">编辑部门</a></p>
+	<p><a shiro:hasPermission="emp:add">增加雇员</a></p>
+	<p><a shiro:notAuthenticated="">还没登陆</a></p>
+	<p><a shiro:authenticated="">已经登陆</a></p> 
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
