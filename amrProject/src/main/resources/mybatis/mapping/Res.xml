@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sun.amr.dao.IResDAO">
+	<resultMap type="Res" id="ResResultMap">
+		<id property="rid" column="rid" />
+		<result property="indate" column="indate" />
+		<result property="title" column="title" />
+		<result property="price" column="price" />
+		<result property="photo" column="photo" />
+		<result property="rflag" column="rflag" />
+		<result property="amount" column="amount" />
+		<!-- 对应一级类别 -->
+		<association property="type" column="tid"
+			resultMap="com.sun.amr.dao.ITypeDAO.TypeResultMap" />
+		<!-- 对应二级类别 -->
+		<association property="subtype" column="stid"
+			resultMap="com.sun.amr.dao.ISubtypeDAO.SubtypeResultMap" />
+	</resultMap>
+	<!-- 插入数据 -->
+	<insert id="doCreate" parameterType="Res">
+		INSERT INTO
+		res(tid,stid,title,price,indate,photo,rflag,amount)
+		VALUES(#{type.tid},#{subtype.stid},#{title},#{price},#{indate},#{photo},#{rflag},#{amount});
+	</insert>
+	<!-- 修改办公用品库存的数量 -->
+	<update id="doUpdatAmount" parameterType="java.util.Map">
+		UPDATE res SET
+		amount=amount+#{1} WHERE rid=#{0}
+	</update>
+	<!-- 实现办公用品的模糊查询 -->
+	<select id="findAllSplit" parameterType="java.util.Map" resultMap="ResResultMap">
+		SELECT rid,tid,stid,title,price,indate,photo,rflag,amount FROM res
+		<if test="keyWord!=null">
+			WHERE ${column} LIKE #{keyWord}
+		</if>
+		ORDER BY indate DESC
+		LIMIT #{start},#{lineSize};
+	</select>
+	<!-- 统计查询到的办公用品数量 -->
+	<select id="getAllCount" parameterType="java.util.Map" resultType="Integer">
+		SELECT COUNT(*) FROM res 
+		<if test="keyWord!=null">
+			WHERE ${column} LIKE #{keyWord}
+		</if>
+	</select>
+	<!-- 根据编号查询用品的信息 -->
+	<select id="findById" parameterType="Integer" resultMap="ResResultMap">
+		SELECT rid,tid,stid,title,price,indate,photo,rflag,amount
+		FROM res WHERE rid=#{rid}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+

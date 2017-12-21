@@ -1,8 +1,9 @@
 package com.sun.amr.dao;
 import java.util.List;
 import java.util.Map;
-
+import org.apache.ibatis.annotations.Mapper;
 import com.sun.amr.vo.Purchase;
+@Mapper
 public interface IPurchaseDAO extends IDAO<Integer, Purchase>{
 	/**
 	 * 查询当前的用户所用申请清单信息

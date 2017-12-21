@@ -1,0 +1,102 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<footer th:fragment="include_menu_item">
+	<aside class="main-sidebar">
+		<!-- sidebar: style can be found in sidebar.less -->
+		<section class="sidebar">
+			<!-- Sidebar user panel -->
+			<div class="user-panel">
+				<div class="pull-left image">
+					<img src="upload/emp/${emp.photo}" class="img-circle"
+						alt="User Image" />
+				</div>
+				<div class="pull-left info">
+					<!-- <p th:text="${emp.name}"></p> -->
+				</div>
+			</div>
+			<!-- /.search form -->
+			<!-- sidebar menu: : style can be found in sidebar.less -->
+			
+			<ul class="sidebar-menu">
+				<li class="header"><i class="fa fa-slack"></i> 行政资源管理系统</li>
+				<li class="treeview" shiro:hasRole="1">
+					<a href="/pages/index">
+						<i class="fa fa-folder-open"></i><span>权限管理</span> 
+						<i class="fa fa-angle-left pull-right"></i>
+				    </a>
+					<ul class="treeview-menu">
+						<li><a href="${act.url}">
+							<i class="fa fa-circle-o"></i></a></li>
+					</ul>
+				</li>
+				
+				<li class="treeview" shiro:hasRole="2">
+					<a href="/pages/index">
+						<i class="fa fa-folder-open"></i><span>人事管理</span> 
+						<i class="fa fa-angle-left pull-right"></i>
+				    </a>
+					<ul class="treeview-menu">
+						<li><a href="${act.url}">
+							<i class="fa fa-circle-o"></i> ${act.title}</a></li>
+					</ul>
+				</li>
+				
+				<li class="treeview" shiro:hasRole="3">
+					<a href="/pages/index">
+						<i class="fa fa-folder-open"></i><span>办公用品</span> 
+						<i class="fa fa-angle-left pull-right"></i>
+				    </a>
+					<ul class="treeview-menu">
+						<li><a href="${act.url}">
+							<i class="fa fa-circle-o"></i> ${act.title}</a></li>
+					</ul>
+				</li>
+				
+				<li class="treeview" shiro:hasRole="4">
+					<a href="/pages/index">
+						<i class="fa fa-folder-open"></i><span>人事管理</span> 
+						<i class="fa fa-angle-left pull-right"></i>
+				    </a>
+					<ul class="treeview-menu">
+						<li><a href="${act.url}">
+							<i class="fa fa-circle-o"></i> ${act.title}</a></li>
+					</ul>
+				</li>
+				
+				<li class="treeview" shiro:hasRole="5">
+					<a href="/pages/index">
+						<i class="fa fa-folder-open"></i><span>办公用品</span> 
+						<i class="fa fa-angle-left pull-right"></i>
+				    </a>
+					<ul class="treeview-menu">
+						<li><a href="${act.url}">
+							<i class="fa fa-circle-o"></i> ${act.title}</a></li>
+					</ul>
+				</li>
+				
+				<li class="treeview" shiro:hasRole="6">
+					<a href="/pages/index">
+						<i class="fa fa-folder-open"></i><span>办公用品</span> 
+						<i class="fa fa-angle-left pull-right"></i>
+				    </a>
+					<ul class="treeview-menu">
+						<li><a href="${act.url}">
+							<i class="fa fa-circle-o"></i> ${act.title}</a></li>
+					</ul>
+				</li>
+				
+				<li class="treeview" shiro:hasRole="7">
+					<a href="/pages/index">
+						<i class="fa fa-folder-open"></i><span>办公用品</span> 
+						<i class="fa fa-angle-left pull-right"></i>
+				    </a>
+					<ul class="treeview-menu">
+						<li><a href="${act.url}">
+							<i class="fa fa-circle-o"></i> ${act.title}</a></li>
+					</ul>
+				</li>
+
+			</ul>
+		</section>
+		<!-- /.sidebar -->
+	</aside>
+</footer>

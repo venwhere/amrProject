@@ -1,8 +1,9 @@
 package com.sun.amr.dao;
 import java.util.List;
 import java.util.Map;
-
+import org.apache.ibatis.annotations.Mapper;
 import com.sun.amr.vo.Action;
+@Mapper
 public interface IActionDAO extends IDAO<Integer, Action>{
 	/**
 	 * 根据权限组编号查询权限信息

@@ -4,7 +4,7 @@
  
 <mapper namespace="com.huang.microboot.dao.IRoleDAO">
 	<select id="findAllRoleByMid" resultType="String">
-		SELECT title FROM role WHERE rid IN (
+		SELECT flag FROM role WHERE rid IN (
 		     SELECT rid FROM member_role WHERE mid=#{mid})
 	</select>
 </mapper>

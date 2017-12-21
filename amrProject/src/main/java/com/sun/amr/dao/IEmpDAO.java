@@ -1,8 +1,9 @@
 package com.sun.amr.dao;
 import java.util.List;
 import java.util.Map;
-
+import org.apache.ibatis.annotations.Mapper;
 import com.sun.amr.vo.Emp;
+@Mapper
 public interface IEmpDAO extends IDAO<Integer, Emp>{
 	/**
 	 * 登录之后要求取出的真实姓名以及用户的照片

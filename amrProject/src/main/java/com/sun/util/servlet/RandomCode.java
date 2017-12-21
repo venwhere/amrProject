@@ -1,5 +1,4 @@
 package com.sun.util.servlet;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -7,19 +6,28 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-@WebServlet(urlPatterns = "/ImageCode")
+
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+@Controller
 public class RandomCode extends HttpServlet { 
+	@Resource
+	RedisTemplate<String, Object> redisTemplate;
 	private static final long serialVersionUID = 1L;
-	private static int WIDTH = 102;//ÑéÖ¤ÂëµÄ¿í¶È
-	private static int HEIGHT = 50;// ÑéÖ¤Âë¸ß¶È
+	private static int WIDTH = 102;//éªŒè¯ç çš„å®½åº¦
+	private static int HEIGHT = 50;// éªŒè¯ç é«˜åº¦
+	@RequestMapping("/ImageCode")
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
@@ -42,14 +50,14 @@ public class RandomCode extends HttpServlet {
 		ImageIO.write(image, "JPEG", bos);
 		byte[] buf = bos.toByteArray();
 		response.setContentLength(buf.length);
-		//½«Éú³ÉµÄÍ¼Æ¬·µ»Øµ½Ò³Ãæ
+		//å°†ç”Ÿæˆçš„å›¾ç‰‡è¿”å›åˆ°é¡µé¢
 		sos.write(buf);
 		bos.close();
 		sos.close();
-		//½«Éú³ÉµÄÑéÖ¤Âë±£´æµ½session
-		session.setAttribute("rand", new String(rands));
+		//å°†ç”Ÿæˆçš„éªŒè¯ç ä¿å­˜åˆ°session
+		//session.setAttribute("rand", new String(rands));
+		redisTemplate.opsForValue().set("rand",new String(rands),30,TimeUnit.SECONDS);
 	}
-
 	private void drawBackground(Graphics g) {
 		g.setColor(new Color(0xDCDCDC));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
@@ -63,7 +71,6 @@ public class RandomCode extends HttpServlet {
 			g.drawOval(x, y, 1, 0);
 		}
 	}
-
 	private void drawRands(Graphics g, char[] rands) {
 		// g.setColor(Color.BLUE);
 		Random random = new Random();
@@ -77,7 +84,6 @@ public class RandomCode extends HttpServlet {
 		g.drawString("" + rands[2], 45, 36);
 		g.drawString("" + rands[3], 65, 33);
 	}
-
 	private char[] generateCheckCode() {
 		String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		char[] rands = new char[4];
@@ -86,10 +92,5 @@ public class RandomCode extends HttpServlet {
 			rands[i] = chars.charAt(rand);
 		}
 		return rands;
-	}
-
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		this.doGet(request, response);
 	}
 }

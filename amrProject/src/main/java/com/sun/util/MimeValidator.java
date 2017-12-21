@@ -7,27 +7,27 @@ import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 public class MimeValidator {
-	public static boolean isMime(Object obj, HttpServletRequest request) { // ÊÇ·ñÖ¸¶¨µÄmimeÊı¾İ
-		// 1¡¢±ØĞëÈ·¶¨ºÃÊÇ·ñÓĞÉÏ´«ÎÄ¼ş
-		MultipartResolver mr = new CommonsMultipartResolver(); // ×¼±¸½øĞĞÉÏ´«ÎÄ¼şµÄ²Ù×÷´¦Àí
-		if (mr.isMultipart(request)) {	// µ±Ç°´æÔÚÓĞÉÏ´«ÎÄ¼ş
-			// 2¡¢È¡µÃ¶¨ÒåµÄmimeÑéÖ¤¹æÔò
+	public static boolean isMime(Object obj, HttpServletRequest request) { // æ˜¯å¦æŒ‡å®šçš„mimeæ•°æ®
+		// 1ã€å¿…é¡»ç¡®å®šå¥½æ˜¯å¦æœ‰ä¸Šä¼ æ–‡ä»¶
+		MultipartResolver mr = new CommonsMultipartResolver(); // å‡†å¤‡è¿›è¡Œä¸Šä¼ æ–‡ä»¶çš„æ“ä½œå¤„ç†
+		if (mr.isMultipart(request)) {	// å½“å‰å­˜åœ¨æœ‰ä¸Šä¼ æ–‡ä»¶
+			// 2ã€å–å¾—å®šä¹‰çš„mimeéªŒè¯è§„åˆ™
 			String mimeContent = MessageUtil.getMessage(obj, "mimeType");
-			if (mimeContent == null || "".equals(mimeContent)) { // ±íÊ¾ÏÖÔÚÃ»ÓĞ¹æÔò
+			if (mimeContent == null || "".equals(mimeContent)) { // è¡¨ç¤ºç°åœ¨æ²¡æœ‰è§„åˆ™
 				return true;
-			} else {	// ĞèÒªÕë¶ÔÓÚÃ¿Ò»¸ö²Ù×÷½øĞĞ¹æÔòµÄÆ¥Åä¼ì²â
-				String mimeRules [] = mimeContent.split("\\|") ;// È¡³öÈ«²¿µÄÀàĞÍ
-				MultipartRequest mreq = (MultipartRequest) request ;	// ´¦ÀíÉÏ´«µÄrequest
-				Map<String, MultipartFile> map = mreq.getFileMap(); // È¡µÃÈ«²¿µÄÉÏ´«ÄÚÈİ
-				if (map.size() > 0) {	// µ±Ç°µÄ±íµ¥ÀïÃæÒÑ¾­¶¨ÒåÓĞÖ¸¶¨µÄÉÏ´«´¦Àí²Ù×÷
+			} else {	// éœ€è¦é’ˆå¯¹äºæ¯ä¸€ä¸ªæ“ä½œè¿›è¡Œè§„åˆ™çš„åŒ¹é…æ£€æµ‹
+				String mimeRules [] = mimeContent.split("\\|") ;// å–å‡ºå…¨éƒ¨çš„ç±»å‹
+				MultipartRequest mreq = (MultipartRequest) request ;	// å¤„ç†ä¸Šä¼ çš„request
+				Map<String, MultipartFile> map = mreq.getFileMap(); // å–å¾—å…¨éƒ¨çš„ä¸Šä¼ å†…å®¹
+				if (map.size() > 0) {	// å½“å‰çš„è¡¨å•é‡Œé¢å·²ç»å®šä¹‰æœ‰æŒ‡å®šçš„ä¸Šä¼ å¤„ç†æ“ä½œ
 					Iterator<Map.Entry<String, MultipartFile>> iter = map.entrySet().iterator() ;
 					while (iter.hasNext()) {
 						Map.Entry<String, MultipartFile> me = iter.next() ;
-						// System.out.println("²ÎÊıÃû³Æ£º" + me.getKey() + "£¬ÎÄ¼ş´óĞ¡£º" + me.getValue().getSize());
-						if (me.getValue().getSize() > 0 ) {	// ÏÖÔÚÕâ¸ö²ÎÊıµÄ±íµ¥ÓĞÎÄ¼şÉÏ´«£¬ÄÇÃ´¾ÍĞèÒª½øĞĞÀàĞÍµÄÆ¥Åä
+						// System.out.println("å‚æ•°åç§°ï¼š" + me.getKey() + "ï¼Œæ–‡ä»¶å¤§å°ï¼š" + me.getValue().getSize());
+						if (me.getValue().getSize() > 0 ) {	// ç°åœ¨è¿™ä¸ªå‚æ•°çš„è¡¨å•æœ‰æ–‡ä»¶ä¸Šä¼ ï¼Œé‚£ä¹ˆå°±éœ€è¦è¿›è¡Œç±»å‹çš„åŒ¹é…
 //							System.out.println("** mime = " + me.getValue().getContentType());
 //							System.out.println("** rules = " + Arrays.toString(mimeRules));
-//							System.out.println("** ÅĞ¶Ï = " + ValidatorUtil.isMime(mimeRules, me.getValue().getContentType()));
+//							System.out.println("** åˆ¤æ–­ = " + ValidatorUtil.isMime(mimeRules, me.getValue().getContentType()));
 							if (!ValidatorRules.isMime(mimeRules, me.getValue().getContentType())) {
 								return false ;
 							}

@@ -1,7 +1,8 @@
 package com.sun.amr.dao;
 import java.util.List;
-
+import org.apache.ibatis.annotations.Mapper;
 import com.sun.amr.vo.Details;
+@Mapper
 public interface IDetailsDAO extends IDAO<Integer, Details> {
 	/**
 	 * 实现待购清单的所有信息的查询

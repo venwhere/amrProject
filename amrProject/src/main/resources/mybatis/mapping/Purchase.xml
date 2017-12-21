@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.sun.amr.dao.IPurchaseDAO">
+	<resultMap type="Purchase" id="PurchaseResultMap">
+		<id property="pid" column="pid"/>
+		<result property="title" column="title"/>
+		<result property="meid" column="meid"/>
+		<result property="total" column="total"/>
+		<result property="status" column="status"/>
+		<result property="pubdate" column="pubdate"/>
+		<result property="note" column="note"/>
+		<!-- 对应申请人的信息 -->
+		<association property="emp" column="eid" resultMap="com.sun.amr.dao.IEmpDAO.EmpResultMap"/>
+	</resultMap>
+	
+	<!-- 插入申请单的信息，使用主键自增长策略 -->
+	<insert id="doCreate" parameterType="Purchase" useGeneratedKeys="true" keyProperty="pid">
+		INSERT INTO purchase(eid,meid,title,total,status,pubdate,note)
+		VALUES(#{emp.eid},null,#{title},#{total},#{status},#{pubdate},#{note});
+	</insert>
+	<!-- 查询当前用户所有的申请单信息 -->
+	<select id="findAllByEmp" parameterType="java.util.Map" resultMap="PurchaseResultMap">
+		SELECT pid,eid,meid,title,total,status,pubdate,note
+		FROM purchase WHERE eid=#{eid} ORDER BY pubdate DESC 
+		LIMIT #{start},#{lineSize};
+	</select>
+	<!-- 统计查询到的数据量，用作分页显示 -->
+	<select id="getAllCountByEmp" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM purchase WHERE eid=#{eid};
+	</select>
+	<!-- 根据申请单的编号和当前用户的编号查询数据 -->
+	<select id="findByIdAndEmp" resultMap="PurchaseResultMap">
+		SELECT pid,eid,meid,title,total,status,pubdate,note 
+		FROM purchase WHERE eid=#{1} AND pid=#{0}
+	</select>
+	<!-- 根据申请单的编号查询信息 -->
+	<select id="findById" parameterType="Integer" resultMap="PurchaseResultMap">
+		SELECT pid,eid,meid,title,total,status,pubdate,note 
+		FROM purchase WHERE pid=#{pid}
+	</select>
+	<!-- 为财务部门分页查询所有的申请单信息 -->
+	<select id="findAllSimpleSplit" parameterType="java.util.Map" resultMap="PurchaseResultMap">
+		SELECT pid,eid,meid,title,total,status,note
+		FROM purchase ORDER BY pubdate DESC
+		LIMIT #{0},#{1};
+	</select>
+	<!--  为财务部门统计查询到的申请单的数据量  -->
+	<select id="getAllCountSimple" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM purchase;		
+	</select>
+	
+	
+	
+	
+	<!-- 作业  财务部门审核申请单 -->
+	<update id="doUpdateStatus" parameterType="java.util.Map">
+		UPDATE purchase SET status=#{1},meid=#{2} WHERE pid=#{0};
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+

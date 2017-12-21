@@ -3,11 +3,11 @@ package com.sun.util;
 import com.sun.amr.action.abs.AbstractAction;
 
 public class SplitUtil {
-	private int cp=1;    //Ä¬ÈÏÊÇµÚÒ»Ò³
-	private int ls=6;    //Ä¬ÈÏÃ¿Ò³ÏÔÊ¾ÈıÌõĞÅÏ¢
-	private String col;  //Ä£ºı²éÑ¯µÄ×Ö¶Î
-	private String kw;   //Ä£ºı²éÑ¯µÄ¹Ø¼ü×Ö
-	private AbstractAction action;   //ActionµÄ¸¸Àà¶ÔÏó£¬Ö÷ÒªµÄÄ¿µÄÊÇµ÷ÓÃ¸Ã¸¸ÀàµÄ³éÏó·½·¨È¡µÃÒ»Ğ©×ÓÀàµ¥¶À¶¨ÒåµÄĞÅÏ¢
+	private int cp=1;    //é»˜è®¤æ˜¯ç¬¬ä¸€é¡µ
+	private int ls=6;    //é»˜è®¤æ¯é¡µæ˜¾ç¤ºä¸‰æ¡ä¿¡æ¯
+	private String col;  //æ¨¡ç³ŠæŸ¥è¯¢çš„å­—æ®µ
+	private String kw;   //æ¨¡ç³ŠæŸ¥è¯¢çš„å…³é”®å­—
+	private AbstractAction action;   //Actionçš„çˆ¶ç±»å¯¹è±¡ï¼Œä¸»è¦çš„ç›®çš„æ˜¯è°ƒç”¨è¯¥çˆ¶ç±»çš„æŠ½è±¡æ–¹æ³•å–å¾—ä¸€äº›å­ç±»å•ç‹¬å®šä¹‰çš„ä¿¡æ¯
 	public SplitUtil() {}
 	public SplitUtil(AbstractAction action) {
 		this.action=action;
@@ -15,7 +15,7 @@ public class SplitUtil {
 	
 	public void setCp(String cp) {
 		try {
-			this.cp=Integer.parseInt(cp);   //ÉèÖÃµ±Ç°Ò³£¬Èç¹û³öÏÖÁËÒì³£°´ÕÕÄ¬ÈÏ´¦ÀíÎª1
+			this.cp=Integer.parseInt(cp);   //è®¾ç½®å½“å‰é¡µï¼Œå¦‚æœå‡ºç°äº†å¼‚å¸¸æŒ‰ç…§é»˜è®¤å¤„ç†ä¸º1
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
@@ -23,14 +23,14 @@ public class SplitUtil {
 	
 	public void setLs(String ls) {
 		try {
-			this.ls=Integer.parseInt(ls);     //ÉèÖÃÃ¿Ò³ÏÔÊ¾µÄÊı¾İÁ¿£¬Ä¬ÈÏÊÇ3
+			this.ls=Integer.parseInt(ls);     //è®¾ç½®æ¯é¡µæ˜¾ç¤ºçš„æ•°æ®é‡ï¼Œé»˜è®¤æ˜¯3
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public void setCol(String col) {
-		if (col==null||"".equals(col)) {//Èç¹û´«µİ×Ö¶ÎÊÇ¿Õ»òÕßÊÇnull£¬Ö±½ÓÈ¡µÃ×ÓÀàÌá¹©µÄÄ¬ÈÏ×Ö¶Î
+		if (col==null||"".equals(col)) {//å¦‚æœä¼ é€’å­—æ®µæ˜¯ç©ºæˆ–è€…æ˜¯nullï¼Œç›´æ¥å–å¾—å­ç±»æä¾›çš„é»˜è®¤å­—æ®µ
 			this.col=this.action.getDefaultColumn();
 		}else {
 			this.col=col;

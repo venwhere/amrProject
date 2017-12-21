@@ -8,7 +8,7 @@ public interface IAdminService {
 	 * @return   返回执行结果的布尔值
 	 * @throws Exception
 	 */
-	public boolean login(Emp vo) throws Exception;
+	public Emp login(Emp vo) throws Exception;
 	/**
 	 * 增加管理员前的数据准备查询
 	 * @return   保存了雇员的级别信息的数据

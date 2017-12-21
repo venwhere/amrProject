@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<base href="/"/>
+<div th:replace="@{/pages/plugins/include_javascript_head}::include_javascript_head"></div>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+		<!-- 导入头部标题栏内容 -->
+		<div th:replace="@{/pages/plugins/include_title_head}::include_title_head"></div>
+		<!-- 导入左边菜单项 -->
+		<div th:replace="@{/pages/plugins/include_menu_item}::include_menu_item"></div>
+		<div class="content-wrapper text-center">
+			<!-- 此处编写需要显示的页面 -->
+			<img src="/images/welcome_index.jpg" style="width:90%;height:90%"/>
+		</div>
+		<!-- 导入公司尾部认证信息 -->
+		<div th:replace="@{/pages/plugins/include_title_foot}::include_title_foot"></div>
+		<!-- 导入右边工具设置栏 -->
+		<div th:replace="@{/pages/plugins/include_menu_sidebar}::include_menu_sidebar"></div>
+		<div class="control-sidebar-bg"></div>
+	</div>
+	<div th:replace="@{/pages/plugins/include_javascript_foot}::include_javascript_foot"></div>
+</body>
+</html>

@@ -157,7 +157,7 @@ public class ShiroConfig {
 		Map<String, String> filterChainDefinitionMap = new HashMap<String, String>();
 		filterChainDefinitionMap.put("/logout", "logout");
 		filterChainDefinitionMap.put("/loginPage", "authc");	// 定义内置登录处理
-		//filterChainDefinitionMap.put("/pages/back/**", "authc");
+		filterChainDefinitionMap.put("/pages/back/**", "authc");
 		//filterChainDefinitionMap.put("/pages/back/**", "roles[dept]");
 		filterChainDefinitionMap.put("/*", "anon");
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);

@@ -3,12 +3,12 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 public class ValidatorRules {
-	private Object obj ;  				//±íÊ¾´¥·¢À¹½ØÆ÷µÄActionÀà
-	private String rules[];		 		//ÑéÖ¤¹æÔò
-	private HttpServletRequest request; //¿ÉÒÔÈ¡µÃÓÃ»§´«µİµÄ²ÎÊı
+	private Object obj ;  				//è¡¨ç¤ºè§¦å‘æ‹¦æˆªå™¨çš„Actionç±»
+	private String rules[];		 		//éªŒè¯è§„åˆ™
+	private HttpServletRequest request; //å¯ä»¥å–å¾—ç”¨æˆ·ä¼ é€’çš„å‚æ•°
 	public  ValidatorRules() {};
 	/**
-	 * ¹¹Ôì·½·¨£¬Èç¹ûÒªÊ¹ÓÃ¸Ã¹¤¾ßÀàĞèÒªÏÈ´´½¨¶ÔÏó
+	 * æ„é€ æ–¹æ³•ï¼Œå¦‚æœè¦ä½¿ç”¨è¯¥å·¥å…·ç±»éœ€è¦å…ˆåˆ›å»ºå¯¹è±¡
 	 * @param obj
 	 * @param rules
 	 * @param request
@@ -21,13 +21,13 @@ public class ValidatorRules {
 	public Map<String,String> validate() {
 		Map<String,String> errors = new HashMap<String,String>() ;
 		for (int x = 0 ; x < this.rules.length ; x ++) {
-			String temp [] = this.rules[x].split(":") ;	// °´ÕÕÊúÏß²ğ·Ö
+			String temp [] = this.rules[x].split(":") ;	// æŒ‰ç…§ç«–çº¿æ‹†åˆ†
 			String paramValue = this.request.getParameter(temp[0]) ;
 			switch(temp[1]) {
 				case "rand" : {
-					if (isString(paramValue)) {	// Êı¾İÏÖÔÚ²»Îª¿Õ
+					if (isString(paramValue)) {	// æ•°æ®ç°åœ¨ä¸ä¸ºç©º
 						String rand = (String) this.request.getSession().getAttribute("rand") ;
-						if (!paramValue.equalsIgnoreCase(rand)) {	// ÑéÖ¤ÂëÑéÖ¤Ê§°Ü
+						if (!paramValue.equalsIgnoreCase(rand)) {	// éªŒè¯ç éªŒè¯å¤±è´¥
 							errors.put(temp[0], MessageUtil.getMessage(this.obj, "invalidate.code.error.msg")) ;
 						}
 					} else {
@@ -35,31 +35,31 @@ public class ValidatorRules {
 					}
 				}
 				case "string" : {
-					if (!isString(paramValue)) {	// ÑéÖ¤Ê§°Ü
+					if (!isString(paramValue)) {	// éªŒè¯å¤±è´¥
 						errors.put(temp[0], MessageUtil.getMessage(this.obj, "invalidate.string.error.msg")) ;
 					}
 					break ;
 				}
 				case "int" : {
-					if (!isInt(paramValue)) {	// ÑéÖ¤Ê§°Ü
+					if (!isInt(paramValue)) {	// éªŒè¯å¤±è´¥
 						errors.put(temp[0], MessageUtil.getMessage(this.obj, "invalidate.int.error.msg")) ;
 					}
 					break ;
 				}
 				case "double" : {
-					if (!isDouble(paramValue)) {	// ÑéÖ¤Ê§°Ü
+					if (!isDouble(paramValue)) {	// éªŒè¯å¤±è´¥
 						errors.put(temp[0], MessageUtil.getMessage(this.obj, "invalidate.double.error.msg")) ;
 					}
 					break ;
 				}
 				case "date" : {
-					if (!isDate(paramValue)) {	// ÑéÖ¤Ê§°Ü
+					if (!isDate(paramValue)) {	// éªŒè¯å¤±è´¥
 						errors.put(temp[0], MessageUtil.getMessage(this.obj, "invalidate.date.error.msg")) ;
 					}
 					break ;
 				}
 				case "datetime" : {
-					if (!isDate(paramValue)) {	// ÑéÖ¤Ê§°Ü
+					if (!isDate(paramValue)) {	// éªŒè¯å¤±è´¥
 						errors.put(temp[0], MessageUtil.getMessage(this.obj, "invalidate.datetime.error.msg")) ;
 					}
 					break ;
@@ -93,13 +93,13 @@ public class ValidatorRules {
 		return false ;
 	}
 	public static boolean isDatetime(String str) {
-		if (isString(str)) {	// Êı¾İ²»Îª¿Õ
+		if (isString(str)) {	// æ•°æ®ä¸ä¸ºç©º
 			return str.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}") ;
 		}
 		return false ;
 	} 
 	public static boolean isMime(String mimeRules [] ,String mime) {
-		if (isString(mime)) {	// Èç¹ûÊı¾İ²»Îª¿Õ
+		if (isString(mime)) {	// å¦‚æœæ•°æ®ä¸ä¸ºç©º
 			for (int x = 0 ; x < mimeRules.length ; x ++) {
 				if (mime.equalsIgnoreCase(mimeRules[x])) {
 					return true ;

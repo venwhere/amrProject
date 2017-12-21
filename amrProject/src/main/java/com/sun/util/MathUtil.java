@@ -2,9 +2,9 @@ package com.sun.util;
 
 public class MathUtil {
 	/**
-	 * 实现四舍五入处理操作
-	 * @param num 要操作的数据
-	 * @param scale 设置数据的保留小数位
+	 * 瀹炵幇鍥涜垗浜斿叆澶勭悊鎿嶄綔
+	 * @param num 瑕佹搷浣滅殑鏁版嵁
+	 * @param scale 璁剧疆鏁版嵁鐨勪繚鐣欏皬鏁颁綅
 	 * @return
 	 */
 	public static double round(double num, int scale) {

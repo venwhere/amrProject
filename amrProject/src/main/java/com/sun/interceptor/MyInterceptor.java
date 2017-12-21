@@ -16,16 +16,16 @@ public class MyInterceptor implements HandlerInterceptor{
 		HandlerMethod handlerMethod=(HandlerMethod)handler;
 		String validatorKey=handlerMethod.getBeanType().getSimpleName()+"."+handlerMethod.getMethod().getName()+".rules";
 		String validateContent=MessageUtil.getMessage(handlerMethod.getBean(), validatorKey);
-		if(validateContent==null||"".equals(validateContent)) {//Èç¹ûÃ»ÓĞ¹æÔòÖ±½Ó·ÅĞĞ
+		if(validateContent==null||"".equals(validateContent)) {//å¦‚æœæ²¡æœ‰è§„åˆ™ç›´æ¥æ”¾è¡Œ
 			return true;
 		}else {
 			String rules[]=validateContent.split("\\|");
 			Map<String,String> result=new ValidatorRules(handlerMethod.getBean(),rules,request).validate();
-			if(result.size()>0) {//ÓĞ´íÎóÔòÌø×ªµ½´íÎóÒ³Ãæ
+			if(result.size()>0) {//æœ‰é”™è¯¯åˆ™è·³è½¬åˆ°é”™è¯¯é¡µé¢
 				request.setAttribute("errors", result);
 				request.getRequestDispatcher("/errors.jsp").forward(request, response);
 				return false;
-			}else {//Èç¹ûÃ»ÓĞ´íÎóÒªÑéÖ¤ÉÏ´«ÎÄ¼şĞÅÏ¢
+			}else {//å¦‚æœæ²¡æœ‰é”™è¯¯è¦éªŒè¯ä¸Šä¼ æ–‡ä»¶ä¿¡æ¯
 				boolean flag=MimeValidator.isMime(handlerMethod.getBean(), request);
 				if(flag==false) {
 					result.put("file", MessageUtil.getMessage(handlerMethod, "invalidate.file.mime.error.msg"));

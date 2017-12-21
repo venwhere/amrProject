@@ -4,7 +4,7 @@
  
 <mapper namespace="com.huang.microboot.dao.IActionDAO">
 	<select id="findAllActionByMid" resultType="String">
-	SELECT title FROM action WHERE actid IN(
+	SELECT flag FROM action WHERE actid IN(
 	     SELECT actid FROM role_action WHERE rid IN (
 	         SELECT rid FROM member_role WHERE mid=#{mid}))
 	</select>

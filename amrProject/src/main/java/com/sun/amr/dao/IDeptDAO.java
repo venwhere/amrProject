@@ -1,6 +1,8 @@
 package com.sun.amr.dao;
 import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 import com.sun.amr.vo.Dept;
+@Mapper
 public interface IDeptDAO extends IDAO<Integer, Dept>{
 	/**
 	 * 根据部门的特殊标记进行查询

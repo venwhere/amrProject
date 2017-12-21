@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.sun.amr.dao.IGroupsDAO">
+	<resultMap type="Groups" id="GroupsResultMap">
+		<id property="gid" column="gid"/>
+		<result property="title" column="title"/>
+		<result property="type" column="type"/>
+		<collection property="allActions" javaType="java.util.List" ofType="Action"/>
+		<collection property="allDepts" javaType="java.util.List" ofType="Dept"/>
+	</resultMap>
+	<!-- 根据部门编号查询权限的信息 -->
+	<select id="findAllByDept" parameterType="Integer" resultMap="GroupsResultMap">
+		SELECT gid,title,type FROM groups WHERE gid IN(
+		SELECT gid FROM dept_groups WHERE did=#{pdid});
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
